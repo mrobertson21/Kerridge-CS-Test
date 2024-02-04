@@ -1,0 +1,49 @@
+﻿@model ProductViewModel
+
+@{
+    ViewData["Title"] = "Receipt";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Kerridge CS Code Test <br /> <i>Max Robertson</i></h1>
+    <p>Here is your receipt.</p>
+
+    <div class="row fw-bold" style="margin-top: 50px;">
+        <div class="col-md-4">Quantity</div>
+        <div class="col-md-4">Product</div>
+        <div class="col-md-4">Price</div>
+    </div>
+
+    @{
+        if (Model.Products != null)
+        {
+            foreach (var item in Model.Products!)
+            {
+                <div class="row">
+                    <div class="col-md-4">@item.Quantity</div>
+                    <div class="col-md-4">@item.Name</div>
+                    <div class="col-md-4">@item.TotalPrice</div>
+
+                </div>
+            }
+
+            <div class="row fw-bold">
+                <div class="col-md-12" style="text-align: left;"><label id="tax-label">Sales Tax: @Model.TotalTax</label></div>
+            </div>
+            <div class="row fw-bold">
+                <div class="col-md-12" style="text-align: left;"><label id="price-label">Total: @Model.TotalPrice</label></div>
+            </div>
+            <div class="row fw-bold">
+                <div class="col-md-12" style="text-align: left;"><a href="#" onclick="window.print();" >Print</a></div>
+            </div>
+            
+        }
+        else
+        {
+            <div class="row fw-bold">
+                <div class="col-md-12" style="text-align: left;">No products selected.</div>
+            </div>
+        }
+    }
+</div>
+
