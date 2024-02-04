@@ -8,10 +8,11 @@
     <h1 class="display-4">Kerridge CS Code Test <br /> <i>Max Robertson</i></h1>
     <p>Here is your receipt.</p>
 
-    <div class="row fw-bold" style="margin-top: 50px;">
-        <div class="col-md-4">Quantity</div>
-        <div class="col-md-4">Product</div>
-        <div class="col-md-4">Price</div>
+    <div class="row fw-bold table-header">
+        <div class="col-md-2" style="text-align: left;">Quantity</div>
+        <div class="col-md-4" style="text-align: left;">Product</div>
+        <div class="col-md-2" style="text-align: right;">Price</div>
+        <div class="col-md-4">&nbsp;</div>
     </div>
 
     @{
@@ -19,29 +20,42 @@
         {
             foreach (var item in Model.Products!)
             {
-                <div class="row">
-                    <div class="col-md-4">@item.Quantity</div>
-                    <div class="col-md-4">@item.Name</div>
-                    <div class="col-md-4">@item.TotalPrice</div>
+                <div class="row spaced-top-tiny">
+                    <div class="col-md-2" style="text-align: left;">@item.Quantity</div>
+                    <div class="col-md-4" style="text-align: left;">@item.Name</div>
+                    <div class="col-md-2" style="text-align: right;">@item.TotalPrice</div>
+                    <div class="col-md-4">&nbsp;</div>
 
                 </div>
             }
 
-            <div class="row fw-bold">
-                <div class="col-md-12" style="text-align: left;"><label id="tax-label">Sales Tax: @Model.TotalTax</label></div>
+            <div class="row fw-bold spaced-top-large">
+                <div class="col-md-2" style="text-align: left;"><label>Sales Tax:</label></div>
+                <div class="col-md-1" style="text-align: right;"><label>@Model.TotalTax</label></div>
+                <div class="col-md-9">&nbsp;</div>
             </div>
             <div class="row fw-bold">
-                <div class="col-md-12" style="text-align: left;"><label id="price-label">Total: @Model.TotalPrice</label></div>
+                <div class="col-md-2" style="text-align: left;"><label>Total:</label></div>
+                <div class="col-md-1" style="text-align: right;"><label>@Model.TotalPrice</label></div>
+                <div class="col-md-9">&nbsp;</div>
             </div>
-            <div class="row fw-bold">
-                <div class="col-md-12" style="text-align: left;"><a href="#" onclick="window.print();" >Print</a></div>
+            <div class="row fw-bold spaced-top-medium">
+                <div class="col-md-4" style="text-align: left;">
+                    <a href="#" onclick="window.print();" class="btn btn-normal">Print</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-normal">Restart</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Index" asp-route-reset="false" class="btn btn-normal">Edit Basket</a>
+                </div>
             </div>
-            
+
         }
         else
         {
-            <div class="row fw-bold">
+            <div class="row spaced-top-medium">
                 <div class="col-md-12" style="text-align: left;">No products selected.</div>
+            </div>
+            <div class="row spaced-top-medium">
+                <div class="col-md-2" style="text-align: left;"><a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-normal">Home</a></div>
+                
             </div>
         }
     }

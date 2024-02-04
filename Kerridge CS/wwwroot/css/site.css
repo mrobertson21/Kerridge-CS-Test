@@ -20,3 +20,36 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.spaced-top-large {
+    margin-top: 50px;
+}
+
+.spaced-top-medium {
+    margin-top: 25px;
+}
+
+.spaced-top-small {
+    margin-top: 12px;
+}
+
+.spaced-top-tiny {
+    margin-top: 5px;
+}
+
+.table-header {
+    margin-top: 50px;
+    margin-bottom: 12px;
+}
+
+.btn-normal {
+    color: #fff;
+    background-color: #000;
+    border-color: #000;
+}
+
+    .btn-normal:hover {
+        color: #fff;
+        background-color: #157347;
+        border-color: #146c43;
+    }

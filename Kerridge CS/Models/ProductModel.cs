@@ -12,6 +12,7 @@ namespace Kerridge_CS.Models
         public int Quantity { get; set; }
         public decimal Price { get; set; }
 		public decimal Tax { get; set; }
+		public decimal TotalPrice { get; set; } // Price plus tax.
     }
 }
 

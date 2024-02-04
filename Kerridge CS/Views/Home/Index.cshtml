@@ -1,9 +1,132 @@
-﻿@{
+﻿@model ProductViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Kerridge CS Code Test <br /> <i>Max Robertson</i></h1>
+    <p>
+        Select a product from the drop down list, select the desired quantity and click the Plus button to add the product to your basket. <br />
+        You can remove products from your basket using the Trash button.<br />
+        Submit your basket to view and print your receipt.
+    </p>
+
+    <form asp-controller="Home" asp-action="Index" method="post" id="addProdForm">
+        @Html.AntiForgeryToken()
+        <div class="row spaced-top-large">
+            <div class="col-md-4">
+                <select id="prod" name="prod" class="form-control" asp-for="ProductName" asp-items="Model.ProductList" onchange="productChanged();"></select>
+            </div>
+            <input type="hidden" asp-for="ProductName" id="prod-name" />
+            <div class="col-md-2">
+                <input asp-for="ProductQuantity" class="form-control" min="1" value="1" id="prod-quantity" onchange="setProductPrice()" />
+            </div>
+            <div class="col-md-2" style="text-align: right;">
+                <label id="price-label">0</label>
+            </div>
+            <input type="hidden" asp-for="ProductPrice" id="prod-price" />
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-success" onclick="return addProduct();" title="Add the product to your basket">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <div class="row fw-bold table-header">
+        <div class="col-md-4" style="text-align: left;">Product</div>
+        <div class="col-md-2" style="text-align: right;">Quantity</div>
+        <div class="col-md-2" style="text-align: right;">Price</div>
+        <div class="col-md-4">&nbsp;</div>
+    </div>
+
+    @{
+        if (Model.Products != null)
+        {
+            foreach (var item in Model.Products!)
+            {
+                <div class="row spaced-top-tiny">
+                    <div class="col-md-4" style="text-align: left;">@item.Name</div>
+                    <div class="col-md-2" style="text-align: right;">@item.Quantity</div>
+                    <div class="col-md-2" style="text-align: right;">@item.Price</div>
+                    <div class="col-md-4">
+                        <form method="post" asp-controller="Home" asp-action="Index" id="remProdForm">
+                            <button type="submit" class="btn btn-danger" value="@item.Id" name="prodId" title="Remove the product from your basket">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            }
+        }
+    }
+
+
 </div>
+
+<div class="row spaced-top-medium">
+    <div class="col-md-4">
+        <a asp-area="" asp-controller="Home" asp-action="Receipt" class="btn btn-normal">Submit Basket</a>
+        <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-normal">Clear Basket</a>
+    </div>
+    <div class="col-md-8">&nbsp;</div>
+    
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        // Add a product.
+        function addProduct() {
+            // Set the model's product name property.
+            document.getElementById("prod-name").value = document.getElementById("prod").selectedOptions[0].text
+
+            // If no product has been selected display a message.
+            if (document.getElementById("prod").selectedOptions[0].value == "") {
+                alert("Please select a product");
+                return false;
+            }
+
+            // Submit the form.
+            document.getElementById("addProdForm").submit();
+            return true;
+        }
+
+        // Product selection.
+        function productChanged() {
+            // Reset the quantity to 1.
+            document.getElementById("prod-quantity").value = "1";
+
+            // Set the model's total product price property.
+            setProductPrice()
+        }
+
+        $(document).ready(function () {
+            // Maintain scroll position.
+            $(document).scrollTop(localStorage['indexPage']);
+
+            // Set the initial product price based on quantity.
+            setProductPrice()
+        });
+
+        // Note scroll position.
+        $(document).scroll(function () {
+            localStorage['indexPage'] = $(document).scrollTop();
+        });
+
+        function setProductPrice() {
+            // Set the model's total product price based on quantity.
+            document.getElementById("prod-price").value = Number(Number(document.getElementById("prod-quantity").value) * Number(document.getElementById("prod").value)).toFixed(2);
+
+            // Get the product price label and display the total value for the selected product quantity.
+            var labels = document.getElementsByTagName('label');
+            for (var i = 0; i < labels.length; i++) {
+                if (labels[i].id == "price-label") {
+                    labels[i].innerHTML = document.getElementById("prod-price").value;
+                }
+            }
+        }
+    </script>
+}
 

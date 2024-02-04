@@ -3,6 +3,9 @@
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Add Tax Calculator interface.
+builder.Services.AddScoped<TaxCalculator.ITaxCalc, TaxCalculator.TaxCalc>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

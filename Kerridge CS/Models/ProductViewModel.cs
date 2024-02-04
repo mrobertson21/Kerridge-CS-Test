@@ -4,13 +4,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Kerridge_CS.Models
 {
-	public class TaxViewModel
+	public class ProductViewModel
 	{
-		public TaxViewModel()
+		public ProductViewModel()
 		{
 		}
 
-        public IEnumerable<ProductModel>? Products { get; set; }
+        public List<ProductModel>? Products { get; set; }
         public List<SelectListItem>? ProductList { get; set; }
 
         [Display(Name = "Product")]
@@ -19,6 +19,8 @@ namespace Kerridge_CS.Models
 
         public int ProductQuantity { get; set; }
         public decimal ProductPrice { get; set; }
+        public decimal TotalTax { get; set; }
+        public decimal TotalPrice { get; set; }
     }
 }
 
